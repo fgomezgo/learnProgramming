@@ -24,7 +24,7 @@ void Heap::pop(int *a){
   while( !(tmp*2 >= index) ){                               //Mientras tmp NO sea una hoja (si el hijo izq no existe, el derecho tampoco)
     if(tmp*2+1 < index){                                    //Si tmp tiene a sus 2 hijos (si el hijo der existe, el izquierdo tambien)
       if(a[tmp] > a[tmp*2] && a[tmp] > a[tmp*2+1]) break;   //Si tmp es mayor a sus 2 hijos, se detiene
-      if(a[tmp*2] > a[tmp*2+1])                             //tmp_hijo toma el valor del mayor de los hijos
+      if(a[tmp*2] > a[tmp*2+1])                             //tmp_hijo toma el valor del hijo que tenga el mayor valor
         tmp_hijo = tmp*2;
       else
         tmp_hijo = tmp*2+1;
