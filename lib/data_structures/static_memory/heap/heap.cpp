@@ -11,7 +11,7 @@ void Heap::push(int *a, int numero){
   int tmp = index++; //Index apunta al siguiente nodo vacio
   
   while(tmp != 1 && a[tmp/2] < a[tmp]){   //Mientras tmp no sea la raiz y su valor en a sea mayor que el de su padre
-    std::swap(a[tmp/2],a[tmp]);
+    std::swap(a[tmp/2],a[tmp]);           //Se intercambia el valor de tmp con su padre
     tmp /= 2;                             //Sube al padre
   }
 }
@@ -32,8 +32,8 @@ void Heap::pop(int *a){
       if(a[tmp] > a[tmp*2]) break;                          //Si tmp es mayor que su hijo izq, se detiene
       tmp_hijo = tmp*2;
     }
-    std::swap(a[tmp],a[tmp_hijo]);
-    tmp = tmp_hijo;
+    std::swap(a[tmp],a[tmp_hijo]);                          //Se intercambia el valor de tmp con su hijo
+    tmp = tmp_hijo;                                         //Baja al hijo
   }
 }
 //Top
