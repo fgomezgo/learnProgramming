@@ -33,23 +33,19 @@ struct Heap{
     a[1] = a[index-1];
     index--;
     int tmp = 1, tmp_hijo;
-    while( !(tmp*2 >= index && tmp*2+1 >= index) ){
-      //Tengo a mis 2 hijos
-      if(tmp*2 < index && tmp*2+1 < index){
-        if(a[tmp] > a[tmp*2] && a[tmp] > a[tmp*2+1]) 
-          break;
+    while( !(tmp*2 >= index) ){                               //Mientras tmp NO sea una hoja (si el hijo izq no existe, el derecho tampoco)
+      if(tmp*2+1 < index){                                    //Si tmp tiene a sus 2 hijos (si el hijo der existe, el izquierdo tambien)
+        if(a[tmp] > a[tmp*2] && a[tmp] > a[tmp*2+1]) break;   //Si tmp es mayor a sus 2 hijos, se detiene
         if(a[tmp*2] > a[tmp*2+1])
           tmp_hijo = tmp*2;
         else
           tmp_hijo = tmp*2+1;
-      } else {
-        if(a[tmp] > a[tmp*2])
-          break;
+      } else {                                                //Si tmp tiene unicamente al hijo izquierdo
+        if(a[tmp] > a[tmp*2]) break;                          //Si tmp es mayor que su hijo izq, se detiene
         tmp_hijo = tmp*2;
       }
       std::swap(a[tmp],a[tmp_hijo]);
       tmp = tmp_hijo;
-    
     }
   }
   int top(int *a){
