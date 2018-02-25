@@ -8,7 +8,7 @@ Stack::Stack(){
 }
 //Push
 void Stack::push(int value){ 
-  Nodo* tmp = new Nodo(value,index);  //Se inicializa un nuevo espacio de memoria apuntando a index y con valor igual a "numero"
+  Nodo* tmp = new Nodo(value,index);  //Se inicializa un nuevo espacio de memoria apuntando a index y con valor igual a "value"
   index = tmp;                        //Index ahora apunta al espacio recien inicializado
   ++sz;                               //La pila crece en 1
 }
