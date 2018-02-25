@@ -9,7 +9,7 @@ class Stack{
       int val;
       Nodo* nxt;
       Nodo(){}
-      Nodo(int num, Nodo* nxt) : val(num), nxt(nxt) {}
+      Nodo(int val, Nodo* nxt) : val(val), nxt(nxt) {}
     };
     //Apuntador que contiene la referencia al tope de la pila
     Nodo* index;  
@@ -20,7 +20,7 @@ class Stack{
     //Constructor
     Stack();
     //Push
-    void push(int numero);
+    void push(int value);
     //Pop
     void pop();
     //Top
