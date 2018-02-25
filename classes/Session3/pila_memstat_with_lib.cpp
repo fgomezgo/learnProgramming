@@ -1,7 +1,7 @@
 // Pila implementada usando memoria estatica en raw code
 #include<cstdio> //lectura escritura en C
 #include<iostream> //lectura escritura en C++
-#include "../../lib/data_structures/static_memory/stack/stack.cpp"
+#include "../../lib/static_memory/data_structures/stack/stack.cpp"
 
 #define MAXN 100000
 

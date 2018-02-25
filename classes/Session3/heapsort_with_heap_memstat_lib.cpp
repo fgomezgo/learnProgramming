@@ -1,7 +1,7 @@
 // Heapsort: Ordenamiento utilizando un heap
 #include<cstdio> //lectura escritura en C
 #include<iostream> //lectura escritura en C++
-#include "../lib/data_structures/static_memory/heap/heap.cpp"  //AQUI se manda llamar la clase heap.cpp
+#include "../../lib/static_memory/data_structures/heap/heap.cpp"  //AQUI se manda llamar la clase heap.cpp
 
 #define MAXN 100000
 
