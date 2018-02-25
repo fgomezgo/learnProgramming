@@ -2,7 +2,7 @@
 #define HEAP_H
 
 class Heap{
-  //--Variables--//
+
   private: 
       //Indice que apunta a la siguinte hoja vacia que mantenga el arbol completo (no degenerado)
       int index;         
