@@ -5,8 +5,8 @@ Stack::Stack(){
   index = 0;
 }
 //Push
-void Stack::push(int *a, int numero){ 
-  a[index++] = numero;
+void Stack::push(int *a, int value){ 
+  a[index++] = value;
 }
 //Pop
 void Stack::pop(){ 

@@ -11,7 +11,7 @@ class Stack{
     //Constructor
     Stack();
     //Push
-    void push(int *a, int numero);
+    void push(int *a, int value);
     //Pop
     void pop();
     //Top
