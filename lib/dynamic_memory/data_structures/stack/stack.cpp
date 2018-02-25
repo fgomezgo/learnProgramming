@@ -16,7 +16,7 @@ void Stack::push(int value){
 void Stack::pop(){ 
    assert(index != NULL);             //Si la pila esta vacia, regresa SEGMENTATION FAULT
    Nodo* tmp = index;                 //tmp apunta a index
-   index = index->nxt;                //top apunta al siguient en la pila
+   index = index->nxt;                //Index apunta al siguiente en la pila
    delete tmp;                        //tmp borra el primer elemento de la memoria
    --sz;                              //La pila decrece en 1
 }
