@@ -6,8 +6,8 @@ Heap::Heap(){
   index = 1;
 }
 //Push
-void Heap::push(int *a, int numero){
-  a[index] = numero; //El numero se inserta en a
+void Heap::push(int *a, int value){
+  a[index] = value;  //El valor se inserta en a
   int tmp = index++; //Index apunta al siguiente nodo vacio
   
   while(tmp != 1 && a[tmp/2] < a[tmp]){   //Mientras tmp no sea la raiz y su valor en a sea mayor que el de su padre
@@ -19,21 +19,21 @@ void Heap::push(int *a, int numero){
 void Heap::pop(int *a){
   a[1] = a[index-1];                                        //El valor en el ultimo nodo insertado remplaza a la raiz
   index--;                                                  //El arbol se reduce un nodo
-  int tmp = 1, tmp_hijo;
+  int tmp = 1, tmp_child;
   
   while( !(tmp*2 >= index) ){                               //Mientras tmp NO sea una hoja (si el hijo izq no existe, el derecho tampoco)
     if(tmp*2+1 < index){                                    //Si tmp tiene a sus 2 hijos (si el hijo der existe, el izquierdo tambien)
       if(a[tmp] > a[tmp*2] && a[tmp] > a[tmp*2+1]) break;   //Si tmp es mayor a sus 2 hijos, se detiene
       if(a[tmp*2] > a[tmp*2+1])                             //tmp_hijo toma el valor del hijo que tenga el mayor valor
-        tmp_hijo = tmp*2;
+        tmp_child = tmp*2;
       else
-        tmp_hijo = tmp*2+1;
+        tmp_child = tmp*2+1;
     } else {                                                //Si tmp tiene unicamente al hijo izquierdo
       if(a[tmp] > a[tmp*2]) break;                          //Si tmp es mayor que su hijo izq, se detiene
-      tmp_hijo = tmp*2;
+      tmp_child = tmp*2;
     }
-    std::swap(a[tmp],a[tmp_hijo]);                          //Se intercambia el valor de tmp con su hijo
-    tmp = tmp_hijo;                                         //Baja al hijo
+    std::swap(a[tmp],a[tmp_child]);                         //Se intercambia el valor de tmp con su hijo
+    tmp = tmp_child;                                        //Baja al hijo
   }
 }
 //Top

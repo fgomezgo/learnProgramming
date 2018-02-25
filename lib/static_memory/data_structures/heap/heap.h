@@ -11,7 +11,7 @@ class Heap{
       //Constructor
       Heap();
       //Push
-      void push(int *a, int numero);
+      void push(int *a, int value);
       //Pop
       void pop(int *a);
       //Top: Return MAX_ELEM
