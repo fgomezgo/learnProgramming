@@ -9,7 +9,7 @@ void Stack::push(int *a, int numero){
   a[index++] = numero;
 }
 //Pop
-void Stack::pop(){
+void Stack::pop(){ 
   index--; 
 }
 //Top
