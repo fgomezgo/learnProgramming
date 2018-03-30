@@ -62,10 +62,10 @@ int main(){
         //memo[i] = memo[i-1]+memo[i-1]-memo[i-k-1]; //En memo[i] se guarda el valor de la suma anterior (memo[i-1]) mas el valor que corresponderia
                                                      //al termino n-esimo de la funcion (memo[i-1]-memo[i-k-1])
         //Lo que seria equivalente a 2 veces el anterior (memo[i-1]) menos el valor del primer elemento que ya no es considerado en el rango de subsumas (memo[i-k-1])
-        memo[i] = (((memo[i-1]*2)%mod-memo[i-k-1])%mod+mod)%mod; 
+        memo[i] = (((memo[i-1]*2)%mod-memo[i-k-1])+mod)%mod; 
     }
     //Como la localidad memo[n] guarda la suma de todos los estados hasta el n-esimo, para extraer el n-esimo es simplemente la resta de memo[n]-memo[n-1]
-    printf("%d\n",((memo[n]-memo[n-1])%mod+mod)%mod); //Se imprime el n-esimo
+    printf("%d\n",((memo[n]-memo[n-1])+mod)%mod); //Se imprime el n-esimo
     
     return 0;  
 }
