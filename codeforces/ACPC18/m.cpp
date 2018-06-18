@@ -1,3 +1,4 @@
+//http://codeforces.com/gym/101810/problem/M
 #include<bits/stdc++.h>
 #define fst first
 #define snd second
