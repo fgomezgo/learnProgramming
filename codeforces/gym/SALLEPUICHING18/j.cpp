@@ -1,96 +1,98 @@
+//https://codeforces.com/gym/101807/problem/J
 #include<bits/stdc++.h>
 using namespace std;
-#define pb push_back
 #define fst first
 #define snd second
-const int N = 5e5+5;
-int n;
-vector< pair<int, pair<int,int> > > ady[N];
-pair<int,int> parent[N];
-pair< int,pair<int,int> > cant[N]; //max son and weight
-int path[N]; //path belongs
-pair<int,int> p_path[N]; //parent and w of path
-int height[N];
-int renum[N]; //node renumeration
-int edge[N]; //remap from i to nn
-long long tree[(1<<20)+5];
+#define pb push_back
 
-void update(int nodo, int ini, int fin, int pos, long long val){
+const int N = 5e5+5;
+int n,Q;
+vector < pair<int, pair<int,int> > > ady[N];
+int parent[N];
+int height[N];
+int renum[N];
+int edge[N];
+pair<int, pair<int,int> > heavy[N];
+int path[N]; 
+vector <int> head;
+long long tree[(1<<20)+5];
+//ST
+void update(int nodo, int ini, int fin, int idx, long long val){
     if(ini == fin){
         tree[nodo] = val;
         return;
     }
     int mid = (ini+fin)>>1;
-    if(pos <= mid)
-        update(nodo<<1,ini,mid,pos,val);
+    if(idx <= mid)
+        update(nodo<<1,ini,mid,idx,val);
     else
-        update(nodo<<1|1,mid+1,fin,pos,val);
+        update(nodo<<1|1,mid+1,fin,idx,val);
     tree[nodo] = tree[nodo<<1]+tree[nodo<<1|1];
 }
 long long query(int nodo, int ini, int fin, int b, int e){
-    if(b > e)
-        return 0LL;
+    if(b>e)
+        return 0;
     if(ini == b && fin == e)
         return tree[nodo];
     int mid = (ini+fin)>>1;
-    return query(nodo<<1,ini,mid,b,min(mid,e))+query(nodo<<1|1,mid+1,fin,max(b,mid+1),e);
+    return query(nodo<<1,ini,mid,b,min(e,mid))+query(nodo<<1|1,mid+1,fin,max(b,mid+1),e);
 }
-
+//HDL
 int dfs(int nodo){
     int sum = 1;
     int maxi = INT_MIN;
-    for(pair< int,pair<int,int> > v : ady[nodo]){
-        if(v.fst != parent[nodo].fst){
-            parent[v.fst] = make_pair(nodo,v.snd.fst);
+    for(pair<int, pair<int,int> > v : ady[nodo]){
+        if(v.fst != parent[nodo]){
+            parent[v.fst] = nodo;
             height[v.fst] = height[nodo]+1;
-            int tmp = dfs(v.fst);
-            sum += tmp;
-            if(tmp > maxi){
-                maxi = tmp;
-                cant[nodo] = v;
+            int result = dfs(v.fst);
+            sum += result;
+            if(result > maxi){
+                maxi = result;
+                heavy[nodo] = v;
             }
         }
     }
     return sum;
 }
-
 int pos = 1;
-int nn = 1;
-
+int nn = 1, ne = 1;
 void hdl(int nodo){
     renum[nodo] = nn++;
     if(path[nodo] == 0){
         path[nodo] = pos;
-        p_path[pos] = {nodo,parent[nodo].snd};
+        head.pb(nodo);
         ++pos;
+    } 
+    if(heavy[nodo].fst != 0){
+        path[heavy[nodo].fst] = path[nodo];
+        edge[heavy[nodo].snd.snd] = ne++;
+        update(1,1,n-1,edge[heavy[nodo].snd.snd],(long long)heavy[nodo].snd.fst);
+        hdl(heavy[nodo].fst);
     }
-    if(cant[nodo].fst != 0){
-        path[cant[nodo].fst] = path[nodo];
-        update(1,1,n,renum[nodo],cant[nodo].snd.fst);
-        edge[cant[nodo].snd.snd] = renum[nodo];
-        hdl(cant[nodo].fst);
-    }
-    for(pair< int,pair<int,int> > v : ady[nodo]){
-        if(v.fst != parent[nodo].fst && v.fst != cant[nodo].fst){
+    for(pair<int, pair<int,int> > v : ady[nodo]){
+        if(v.fst != parent[nodo] && v != heavy[nodo]){
+            edge[v.snd.snd] = ne++;
+            update(1,1,n-1,edge[v.snd.snd],(long long)v.snd.fst);
             hdl(v.fst);
         }
     }
 }
-
 long long dist(int u, int v){
     long long sum = 0;
     while(path[u] != path[v]){
-        if(height[p_path[path[u]].fst] < height[p_path[path[v]].fst])
+        if(height[head[path[u]]] < height[head[path[v]]]){
             swap(u,v);
-        sum += query(1,1,n,renum[p_path[path[u]].fst],renum[u]-1);
-        sum += p_path[path[u]].snd;
-        u = parent[p_path[u].fst].fst;
+        }
+        sum += query(1,1,n-1,max(1,renum[head[path[u]]]-1),renum[u]-1);
+        u = parent[head[path[u]]];
     }
-    if(u > v)
+    if(renum[u] < renum[v])
         swap(u,v);
-    sum += query(1,1,n,renum[u],renum[v]-1);
+    sum += query(1,1,n-1,renum[v],renum[u]-1);
     return sum;
-}   
+}
+
 
 int main(){
     scanf("%d",&n);
@@ -102,19 +104,18 @@ int main(){
     }
     height[1] = 1;
     dfs(1);
+    head.pb(0);
     hdl(1);
-
-    int Q;
-    scanf("%d", &Q);
+    scanf("%d",&Q);
     int t;
     while(Q--){
-        scanf("%d",&t);
-        int i,l;
+        scanf("%d", &t);
         if(t == 2){
+            int i,l;
             scanf("%d%d",&i,&l);
-            update(1,1,n,edge[i],l);
-        }
-        if(t == 1){
+            update(1,1,n-1,edge[i],(long long)l);
+        } else{
+            int u,v;
             scanf("%d%d",&u,&v);
             long long d = dist(u,v);
             if(d&1){
@@ -123,5 +124,6 @@ int main(){
                 puts("JAKANDA FOREVER");
         }
     }
+
     return 0;
 }
